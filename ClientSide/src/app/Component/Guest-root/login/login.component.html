@@ -1,0 +1,38 @@
+<form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="userName">User Name</label>
+      <input autofocus type="text" class="form-control" placeholder="User Name" formControlName="userName" [ngClass]="{
+        'is-valid': (userName.valid && userName.dirty && userName.touched),
+        'is-invalid': (userName.invalid && userName.dirty && userName.touched)
+         }">
+      <div class="row invalid-feedback" style="text-align: center">
+        invalid User Name (2-15 chars)
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" placeholder="password" formControlName="password" [ngClass]="{
+        'is-valid': (password.valid && password.dirty && password.touched),
+        'is-invalid': (password.invalid && password.dirty && password.touched)
+         }">
+      <div class="row invalid-feedback" style="text-align: center">
+        invalid password (2-15 chars)
+      </div>
+    </div>
+  </div>
+
+  <div id="serverErrorFeedback" class="row" [hidden]="!userServiceError">
+    <p class="col-sm">{{userServiceError}}</p>
+  </div>
+
+  <hr class="my-4">
+
+  <div class="row justify-content-around divBTN">
+    <button type="reset" class="btn btn-primary">Reset</button>
+    <button type="submit" class="btn btn-primary" (click)="login()" [disabled]="!loginForm.valid">Login</button>
+    <button id="closeBtn" type="button" data-dismiss="modal" [hidden]="true">close</button>
+  </div>
+
+</form>

@@ -1,0 +1,63 @@
+<div *ngIf="!rentals" class="app-loading">
+  <div class="logo"></div>
+</div>
+
+<section *ngIf="rentals">
+  <div id="header">
+    <br>
+    <h2 *ngIf="rentals.length == 0">There are no Rentals.</h2>
+    <br>
+  </div>
+
+  <div *ngIf="rentals.length > 0">
+    <form [formGroup]="sortForm" novalidate>
+      <h4>Sort by:</h4>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input form-control-lg" formControlName="sortOptions" (change)="sortByCarId()" type="radio" name="sortOptions"
+          value="CarId">
+        <label class="form-check-label col-form-label-lg">Car Id</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input form-control-lg" formControlName="sortOptions" (change)="sortByPickUpDate()" type="radio"
+          name="sortOptions" value="firstName">
+        <label class="form-check-label col-form-label-lg">Pick-Up Date</label>
+      </div>
+    </form>
+  </div>
+
+  <table class="table table-hover table-dark" align="center">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">User id</th>
+        <th scope="col">Car id</th>
+        <th scope="col">Pick Up Date</th>
+        <th scope="col">Return Date</th>
+        <th scope="col">Actual Return Date</th>
+        <th scope="col">Total Days</th>
+        <th scope="col">Total Amount</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rent of rentals; index as i">
+        <th scope="row">{{i+1}}</th>
+        <td>{{rent.UserId}}</td>
+        <td>{{rent.CarId}}</td>
+        <td>{{rent.PickUpDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{rent.ReturnDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{rent.ActualReturnDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{rent.TotalDays}}</td>
+        <td>{{rent.TotalAmount}}
+          <span *ngIf="rent.TotalAmount">&#36;</span>
+        </td>
+        <td>{{rentalStatus(rent)}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+
+</section>

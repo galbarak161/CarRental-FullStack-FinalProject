@@ -1,0 +1,34 @@
+h1{
+    text-align: center;
+}
+
+  #noResults{
+    text-align: center;
+    font-weight: bold;
+}
+
+main{
+    margin-top: 20px;
+    background:#b7b4c163 none repeat scroll 0 0;
+    border: 5px solid #e1e8ed;
+    border-radius: 6px;
+    max-height: 100%;
+    max-width: 100%;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bold;
+    font-size: medium;
+    position: relative;
+  }
+
+.status {
+    display: inline-block;
+    width: 59px;
+    height: 59px;
+    z-index: 2;
+    position: absolute;
+    right:-3px;        
+    top:-3px;        
+  }
+

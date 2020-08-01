@@ -1,0 +1,91 @@
+<header>
+  <nav class="navbar navbar-light navbar-expand-lg">
+    <a class="navbar-brand" href="#">
+      <img id="logo" src="assets/Images/logo.png" alt="logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">
+          <a class="nav-link" [routerLink]="['home']" data-toggle="collapse">Home | </a>
+        </li>
+        <li class="nav-item" [routerLinkActive]="'active'">
+          <a class="nav-link" [routerLink]="['Search-Car']">Search Car | </a>
+        </li>
+        <li *ngIf="userService.isLoggedin()" class="nav-item" [routerLinkActive]="'active'">
+          <a class="nav-link" [routerLink]="['User-Zone']">User Zone | </a>
+        </li>
+        <li *ngIf="userService.isEmployee() || userService.isAdmin()" class="nav-item" [routerLinkActive]="'active'">
+          <a class="nav-link" [routerLink]="['Employee-Zone']">Employee Zone | </a>
+        </li>
+        <li *ngIf="userService.isAdmin()" class="nav-item" [routerLinkActive]="'active'">
+          <a class="nav-link" [routerLink]="['Admin-Zone']">Admin Zone</a>
+        </li>
+      </ul>
+
+      <div *ngIf="rentalService.temporaryCarsSearch.length>0" class="form-inline my-2 my-lg-0">
+        <button class="btn btn btn-outline-warning my-2 my-sm-0" type="button" (click)="openLg(content)">
+          Last Search
+          <span class="badge badge-danger">{{rentalService.temporaryCarsSearch.length}}</span>
+        </button>
+      </div>
+
+      <div *ngIf="userService.isLoggedin()" class="form-inline my-2 my-lg-0">
+        <button class="btn btn btn-outline-warning my-2 my-sm-0" type="button" (click)="logout()">Logout</button>
+      </div>
+
+    </div>
+  </nav>
+</header>
+
+<main class="container-fluid">
+  <br>
+  <br>
+  <router-outlet></router-outlet>
+</main>
+
+<!--last search model -->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Last Searches</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" *ngIf="rentalService.temporaryCarsSearch.length>0">
+    <table class="table table-borderless table-hover">
+      <tbody>
+        <tr *ngFor="let tempRent of rentalService.temporaryCarsSearch; index as i">
+          <th scope="row">{{i+1}}</th>
+          <td>{{tempRent.carType.Manufacturer}}, {{tempRent.carType.Model}}</td>
+          <td>{{tempRent.carType.Transmission}}</td>
+          <td>{{tempRent.carType.ProductionYear}}</td>
+          <td>{{tempRent.carType.DailyPrice}} &#36; Per day</td>
+          <td>{{tempRent.dates.PickUpDate | date: 'dd/MM/yy'}} - {{tempRent.dates.ReturnDate | date: 'dd/MM/yy'}}</td>
+          <td>{{tempRent.branch.Name}}</td>
+          <td align="center">
+            <img src="{{tempRent.carType.Image}}" alt="carType image" style="width: 50px;height: 50px;">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5 (click)="deleteTempSearch()" style="cursor: pointer;">
+      <span>
+        <img width="24" height="24" src="https://cdn2.iconfinder.com/data/icons/e-business-helper/240/627249-delete3-512.png" alt="">
+      </span>
+      Clear that list
+    </h5>
+  </div>
+
+  <div class="modal-body" *ngIf="rentalService.temporaryCarsSearch.length==0">
+    <p>There are no searches in that list.</p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

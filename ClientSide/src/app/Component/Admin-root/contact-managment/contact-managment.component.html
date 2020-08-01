@@ -1,0 +1,35 @@
+<div *ngIf="!messages" class="app-loading">
+    <div class="logo"></div>
+  </div>
+
+<section *ngIf="messages">
+  <div id="header">
+    <br>
+    <h2 *ngIf="messages.length == 0">There are no Messages.</h2>
+    <br>
+  </div>
+
+  <table class="table table-hover table-dark" align="center">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">User Name</th>
+        <th scope="col">User Email</th>
+        <th scope="col">Message</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let message of messages; index as i">
+        <th scope="row">{{i+1}}</th>
+        <td>{{message.Name}}</td>
+        <td>{{message.Email}}</td>
+        <td>{{message.Message}}</td>
+        <td>
+          <input type="image" src="https://cdn2.iconfinder.com/data/icons/e-business-helper/240/627249-delete3-512.png" alt="Delete"
+            width="24" height="24" (click)="deleteMessage(message.Id, i)">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

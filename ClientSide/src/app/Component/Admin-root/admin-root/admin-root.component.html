@@ -1,0 +1,36 @@
+<br>
+<br>
+
+<ngb-tabset type="pills">
+
+  <ngb-tab title="Cars Management">
+    <ng-template ngbTabContent>
+      <app-cars-management></app-cars-management>
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab title="Rental Management">
+    <ng-template ngbTabContent>
+      <app-orders-management></app-orders-management>
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab title="Users Management">
+    <ng-template ngbTabContent>
+      <app-users-management>
+        <div class="app-loading">
+          <div class="logo"></div>
+          <svg class="spinner" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+        </div>
+      </app-users-management>
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab title="Contacts Management">
+    <ng-template ngbTabContent>
+      <app-contact-managment></app-contact-managment>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>

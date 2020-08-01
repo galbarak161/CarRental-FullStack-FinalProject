@@ -1,0 +1,61 @@
+<br>
+<br>
+
+<section id="welcomeSection">
+  <h1>Welcome!
+    <span *ngIf="userService.isLoggedin()">{{userService.userName}}</span>
+  </h1>
+  <h2>Galbo Rent Car - The best rental company in the world comes to you!</h2>
+  <h3>Join millions of satisfied customers around the world and book the perfect vehicle for the perfect trip!</h3>
+  <h3>Commitment to the lowest prices!</h3>
+  <br>
+  <div *ngIf="userService.isLoggedin()">
+    <h4>Click
+      <span id="linkSpan" class="alert-link" (click)="navigateToRentCar()">here</span> to choose your car!</h4>
+  </div>
+  <div *ngIf="!userService.isLoggedin()" class="row">
+    <button autofocus id="divBTN" class="button col-md btn btn-secondary btn-lg" data-toggle="modal" data-target="#loginReg" (click)="loginClick()"
+      style="vertical-align:middle">
+      <span>Login</span>
+    </button>
+    <button id="divBTN" class="button col-md btn btn-secondary btn-lg" data-toggle="modal" data-target="#loginReg" (click)="regClick()"
+      style="vertical-align:middle">
+      <span>Register</span>
+    </button>
+  </div>
+</section>
+
+<figure class="figure">
+  <img src="assets/Images/logo.png" class="figure-img img-fluid rounded" alt="logo">
+  <figcaption></figcaption>
+</figure>
+
+<br>
+<br>
+<br>
+<app-car-type-list></app-car-type-list>
+<br>
+<br>
+
+<app-contact></app-contact>
+
+<!-- Login / Register Modal -->
+<div class="modal fade" id="loginReg" tabindex="-1" role="dialog" aria-labelledby="loginReg" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="login" *ngIf="login">Login Form</h5>
+        <h5 class="modal-title" id="registration" *ngIf="register">Registration Form
+          <span class="badge badge-warning">Fields indicated by * are mandatory</span>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-login *ngIf="login"></app-login>
+        <app-registration *ngIf="register"></app-registration>
+      </div>
+    </div>
+  </div>
+</div>

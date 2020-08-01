@@ -1,0 +1,28 @@
+<section>
+  <h1>
+    <span class="badge badge-secondary">Choose PickUp branch</span>
+  </h1>
+</section>
+
+<div *ngIf="!branches" class="app-loading">
+  <div class="logo"></div>
+</div>
+
+<section *ngIf="branches">
+  <table class="table table-info table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-info" *ngFor="let branch of branches; index as i" (click)="onChoosenBranch(branch)">
+        <th scope="row">{{i+1}}</th>
+        <td>{{branch.Name}}</td>
+        <td>{{branch.Address}}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

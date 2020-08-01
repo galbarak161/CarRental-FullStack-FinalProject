@@ -1,0 +1,49 @@
+<form [formGroup]="contactForm" (ngSubmit)="sendMessage()" novalidate>
+
+  <h1>Contact Us!</h1>
+
+  <div class="form-group row">
+    <label for="Name" class="col-sm-1 col-form-label">Name</label>
+    <div class="col-sm-11">
+      <input type="text" class="form-control" formControlName="name" placeholder="Yossi Yossi" [ngClass]="{
+        'is-valid': (name.valid && name.dirty && name.touched),
+        'is-invalid': (name.invalid && name.dirty && name.touched)
+         }">
+      <div class="row invalid-feedback" style="font-size: large">
+        Please provide a valid name between 2-15 letters.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="EmailAddress" class="col-sm-1 col-form-label">Email</label>
+    <div class="col-sm-11">
+      <input type="email" class="form-control" formControlName="email" placeholder="name@example.com" [ngClass]="{
+        'is-valid': (email.valid && email.dirty && email.touched),
+        'is-invalid': (email.invalid && email.dirty && email.touched)
+         }">
+      <div class="row invalid-feedback" style="font-size: large">
+        Please provide a valid email address.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="MessageTextArea" class="col-sm-1 col-form-label">Message
+      <span *ngIf="message.value">({{250 - message.value.length}})</span>
+    </label>
+    <div class="col-sm-11">
+      <textarea class="form-control" formControlName="message" rows="3" placeholder="Write your message (up to 250 chars)" [ngClass]="{
+        'is-valid': (message.valid && message.dirty && message.touched),
+        'is-invalid': (message.invalid && message.dirty && message.touched)
+         }">     
+      </textarea>
+      <div class="row invalid-feedback" style="font-size: large">
+        Please write your message (up to 250 chars).
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="button btn btn-secondary btn-lg">Send your message</button>
+  <br>
+</form>

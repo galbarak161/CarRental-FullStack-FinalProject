@@ -1,0 +1,150 @@
+<br>
+
+<form *ngIf="rentalDates && choosenBranch" [formGroup]="filterForm" novalidate autocomplete="off" class="form-group">
+  <section>
+    <label for="Filter" class="col-form-label col-form-label-lg">Filter Results by:</label>
+    <div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" (click)="filterSwitch()" type="radio" formControlName="filterOptions" id="filterByTransmission"
+          value="Transmission">
+        <label class="form-check-label" for="filterByTransmission">Transmission</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" (click)="filterSwitch()" type="radio" formControlName="filterOptions" id="filterByManufacturer"
+          value="Manufacturer">
+        <label class="form-check-label" for="filterByManufacturer">Manufacturer</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" (click)="filterSwitch()" type="radio" formControlName="filterOptions" id="filterByModel"
+          value="Model">
+        <label class="form-check-label" for="filterByModel">Model</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" (click)="filterSwitch()" type="radio" formControlName="filterOptions" id="filterByText" value="TypeId">
+        <label class="form-check-label" for="filterByText">Text</label>
+      </div>
+    </div>
+  </section>
+
+  <br>
+
+  <section *ngIf="filterOptions.value">
+    <div [ngSwitch]="filterOptions.value">
+
+      <div *ngSwitchCase="'Transmission'" class="form-group row">
+        <label class="col-sm-4 col-form-label">Transmission: </label>
+        <div class="col-sm-6">
+          <select class="form-control" formControlName="filterValue">
+            <option selected value="Automatic">Automatic</option>
+            <option value="Manual">Manual</option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'Manufacturer'" class="form-group row">
+        <label class="col-sm-4 col-form-label">Manufacturer:</label>
+        <div class="col-sm-6">
+          <select class="form-control" formControlName="filterValue">
+            <option *ngFor="let type of carTypes" value="{{type.Manufacturer}}">{{type.Manufacturer}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'Model'" class="form-group row">
+        <label class="col-sm-4 col-form-label">Model: </label>
+        <div class="col-sm-6">
+          <select class="form-control" formControlName="filterValue">
+            <option *ngFor="let type of carTypes" value="{{type.Model}}">{{type.Model}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'TypeId'" class="form-group row">
+        <label class="col-sm-4 col-form-label">Text:</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" formControlName="filterValue" list="ManufacturerAndModel" placeholder="Search for Manufacturer And/Or Model">
+          <datalist id="ManufacturerAndModel">
+            <option *ngFor="let type of carTypes" value="{{type.Manufacturer}}, {{type.Model}}">{{type.Manufacturer}}, {{type.Model}}</option>
+          </datalist>
+        </div>
+        <label class="col-sm-2 col-form-label">Format: Manufacturer, Model</label>
+      </div>
+    </div>
+  </section>
+</form>
+
+
+<div *ngIf="!carTypes" class="app-loading">
+  <br>
+  <br>
+    <div class="logo"></div>
+  </div>
+
+<section *ngIf="carTypes">
+  <div *ngIf="carTypes.length == 0" id="noResults">
+    <h2>Unfortunately, we did not find any results for your search.</h2>
+    <h3>Try changing the pick-up / return date or checking at another branch</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-4 " *ngFor="let type of (carTypes | carTypeFilter: filterValue.value: filterOptions.value)">
+      <div class="card text-white bg-secondary mb-3 " style="width: 20rem; ">
+        <img class="card-img-top " src="{{type.Image}} " alt="Car image ">
+        <div class="card-body ">
+          <h5 class="card-title ">{{type.Manufacturer}}, {{type.Model}}</h5>
+          <h6 class="card-subtitle mb-2 ">{{type.Transmission}}</h6>
+          <div class="row ">
+            <p class="col-7 card-text ">Production Year: {{type.ProductionYear}}</p>
+            <button *ngIf="!rentalDates" type="button " class="col-5 btn btn-outline-dark " data-toggle="modal" data-target="#typeModal"
+              (click)="typeClick(type)">More Details</button>
+            <button *ngIf="rentalDates" type="button " class="col-5 btn btn-outline-dark " data-toggle="modal" data-target="#typeModal"
+              (click)="typeClick(type)" (click)="tempRent(type)">To Rent</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Car Type Modal -->
+<div class="modal fade " id="typeModal" tabindex="-1 " role="dialog " aria-labelledby="typeModalLabel " aria-hidden="true ">
+  <div class="modal-dialog " role="document ">
+    <div class="modal-content " *ngIf="choosenType ">
+      <div class="modal-header ">
+        <h5 class="modal-title " id="exampleModalLabel ">{{choosenType.Manufacturer}}, {{choosenType.Model}}</h5>
+        <button type="button " class="close " data-dismiss="modal" aria-label="Close ">
+          <span aria-hidden="true ">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        <img class="card-img-top " src="{{choosenType.Image}} " alt="Car image ">
+        <div class="card-body ">
+          <div class="row ">
+            <h5 class="col-6 card-title ">{{choosenType.Transmission}}</h5>
+            <h5 class="col-6 card-title ">Production Year: {{choosenType.ProductionYear}} </h5>
+          </div>
+          <div class="row ">
+            <h6 class="card-subtitle mb-2 col-6 ">Daily Price: {{choosenType.DailyPrice}} &#36;</h6>
+            <h6 class="card-subtitle mb-2 col-6 ">Delayed Price: {{choosenType.DelayedPrice}} &#36;</h6>
+          </div>
+
+          <br>
+
+
+          <div *ngIf="rentalDates" class="row">
+            <h6 class="card-subtitle mb-2 col-6">Total Days: {{rentalDates.TotalDays}}</h6>
+            <h6 class="card-subtitle mb-2 col-6">Total Amount: {{rentalDates.TotalDays * choosenType.DailyPrice }} &#36;</h6>
+          </div>
+
+        </div>
+
+        <div id="serverErrorFeedback" class="row" [hidden]="!userServiceError">
+          <p class="col-sm">{{userServiceError}}</p>
+        </div>
+
+        <div class="modal-footer">
+          <button id="closeBtn" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button *ngIf="rentalDates" type="button" class="btn btn-primary" (click)="orderThisType(choosenType)">Rent this car!</button>
+        </div>
+      </div>
+    </div>
+  </div>

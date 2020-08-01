@@ -1,0 +1,60 @@
+<br>
+
+<main>
+
+  <h1>
+    <span class="badge badge-secondary">Last Rentals</span>
+  </h1>
+
+  <div *ngIf="!userRentals" class="app-loading">
+    <div class="logo"></div>
+  </div>
+
+  <section *ngIf="userRentals">
+    <div *ngIf="userRentals.length == 0" id="noResults">
+      <h2>You dont have any last rentals.</h2>
+      <h3>Maybe it's time to rent one of our cars?</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-4 " *ngFor="let rent of userRentals; index as i">
+        <div class="card text-white bg-secondary mb-3 " style="width: 20rem; ">
+          <div class="card-img-top">
+            <div class="status" [ngSwitch]="rentalStatus(rent)">
+              <span *ngSwitchCase="'finished'">
+                <img src="assets\Rental-Status\finished.png" alt="status">
+              </span>
+              <span *ngSwitchCase="'upcoming'">
+                <img src="assets\Rental-Status\upcoming.png" alt="status">
+              </span>
+              <span *ngSwitchCase="'ongoing'">
+                <img src="assets\Rental-Status\ongoing.png" alt="status">
+              </span>
+            </div>
+            <img src="{{rent.CarType.Image}}" alt="Car image" />
+          </div>
+          <div class="card-body">
+            <h5 class="card-title ">{{rent.CarType.Manufacturer}}, {{rent.CarType.Model}}, {{rent.CarType.ProductionYear}}</h5>
+            <h5 class="card-title ">Rent Id Reference: {{rent.Id}} </h5>
+            <h5 class="card-title ">Car Id Number: {{rent.CarId}} </h5>
+            <h6 class="card-text">PickUp Date: {{rent.PickUpDate | date: 'dd/MM/yyyy'}}</h6>
+            <div *ngIf="rent.ActualReturnDate">
+              <h6 class="card-text">Actual Return Date: {{rent.ActualReturnDate | date: 'dd/MM/yyyy'}}</h6>
+              <h6 class="card-text">Total Days: {{rent.TotalDays }}</h6>
+              <h6 class="card-text">Total Price (payed): {{rent.TotalAmount }} &#36;</h6>
+            </div>
+            <div *ngIf="futureRental(rent.PickUpDate)">
+              <h6 class="card-text">Return Date: {{rent.ReturnDate | date: 'EEEE, dd/MM/yyyy'}}</h6>
+              <button type="button" (click)="cancelRental(rent.Id, i)" class="btn btn-danger">Cancel this rent</button>
+            </div>
+            <div *ngIf="!futureRental(rent.PickUpDate) && !rent.ActualReturnDate">
+              <br>
+              <br>
+              <h6 class="card-text">Drive Safe!</h6>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

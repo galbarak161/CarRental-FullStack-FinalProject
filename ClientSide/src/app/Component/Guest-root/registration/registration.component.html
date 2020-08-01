@@ -1,0 +1,113 @@
+<form [formGroup]="registrationForm" (ngSubmit)="registration()" novalidate>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="name">Name *</label>
+      <input autofocus type="text" class="form-control" placeholder="Full Name" formControlName="name" [ngClass]="{
+            'is-valid': (name.valid && name.dirty && name.touched),
+            'is-invalid': (name.invalid && name.dirty && name.touched)
+             }">
+      <div class="row invalid-feedback" style="text-align: center">
+        invalid name (2-20 letters)
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="idNumber">ID number *</label>
+      <input type="number" class="form-control" placeholder="Id number" formControlName="id" [ngClass]="{
+        'is-valid': (id.valid && id.dirty && id.touched),
+        'is-invalid': (id.invalid && id.dirty && id.touched)
+         }">
+      <div class="row invalid-feedback" style="text-align: center">
+        invalid id number (9 digits)
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="birthdayDate">Birthday date</label>
+      <input type="date" class="form-control" formControlName="birthDate" [ngClass]="{
+        'is-valid': (birthDate.valid && birthDate.dirty && birthDate.touched),
+        'is-invalid': (birthDate.invalid && birthDate.dirty && birthDate.touched)
+         }">
+      <div class="row invalid-feedback" style="text-align: center" *ngIf="registrationForm.hasError('notValid','birthDate')">
+        {{ birthDate.errors.notValid }}
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="gender">Gender *</label>
+      <select class="form-control" formControlName="gender" [ngClass]="{
+        'is-valid': (gender.valid && gender.dirty && gender.touched),
+        'is-invalid': (gender.invalid && gender.dirty && gender.touched)
+         }">
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+      <div class="row invalid-feedback" style="text-align: center">
+        invalid Gender(choose male or female)
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="userName">User Name *</label>
+      <input type="text" class="form-control" placeholder="User Name" formControlName="userName" [ngClass]="{
+        'is-valid': (userName.valid && userName.dirty && userName.touched),
+        'is-invalid': (userName.invalid && userName.dirty && userName.touched)
+         }">
+      <div class="row invalid-feedback" style="text-align: center">
+        invalid User Name (2-15 chars)
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="password">Password *</label>
+      <input type="password" class="form-control" placeholder="password" formControlName="password" [ngClass]="{
+        'is-valid': (password.valid && password.dirty && password.touched),
+        'is-invalid': (password.invalid && password.dirty && password.touched)
+         }">
+      <div class="row invalid-feedback" style="text-align: center">
+        invalid password (2-15 chars)
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="email">Email *</label>
+    <input type="email" class="form-control" placeholder="Email" formControlName="email" [ngClass]="{
+      'is-valid': (email.valid && email.dirty && email.touched),
+      'is-invalid': (email.invalid && email.dirty && email.touched)
+       }">
+    <div class="row invalid-feedback" style="text-align: center">
+      invalid email
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-8">
+      <label for="image">picture</label>
+      <input type="text" class="form-control" placeholder="Image Url" formControlName="image">
+    </div>
+    <div class="form-group col-md-4">
+      <img id="userImage" *ngIf="image.value" src="{{image.value}}" alt="Wrong url image">
+      <img id="userImage" *ngIf="!image.value" src="http://www.telegraph.co.uk/content/dam/men/2016/05/24/Untitled-1_trans_NvBQzQNjv4BqqVzuuqpFlyLIwiB6NTmJwfSVWeZ_vEN7c6bHu2jJnT8.jpg"
+        alt="user image">
+    </div>
+  </div>
+
+  <div id="serverErrorFeedback" class="row" [hidden]="!userServiceError">
+    <p class="col-sm">{{userServiceError}}</p>
+  </div>
+
+  <hr class="my-4">
+
+  <div class="row justify-content-around divBTN">
+    <button type="reset" class="btn btn-primary">Reset</button>
+    <button id="btnSubmit" type="submit" class="btn btn-primary" (click)="registration()" [disabled]="!registrationForm.valid">Submit</button>
+    <button id="closeBtn" type="button" data-dismiss="modal" [hidden]="true">close</button>
+  </div>
+
+</form>

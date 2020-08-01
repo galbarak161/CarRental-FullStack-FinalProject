@@ -1,0 +1,136 @@
+<main>
+  <h1>Return Car</h1>
+  <span class="badge badge-warning">All fields are mandatory</span>
+  <br>
+  <br>
+
+  <form [formGroup]="carReturnForm" (ngSubmit)="confirmReturn()" novalidate>
+
+    <div class="form-row">
+      <div class="form-group col-md">
+        <label>Car license number</label>
+        <input [disableControl]="disable" type="number" class="form-control" placeholder="car number" formControlName="carId" [ngClass]="{
+          'is-valid': (carId.valid && carId.dirty && carId.touched),
+          'is-invalid': (carId.invalid && carId.dirty && carId.touched)
+           }">
+        <div class="row invalid-feedback" style="text-align: center">
+          invalid license number (7-9 digits)
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label>PickUp Date</label>
+        <input [disableControl]="disable" type="date" class="form-control" formControlName="PickUpDate" [ngClass]="{
+          'is-valid': (PickUpDate.valid && PickUpDate.dirty && PickUpDate.touched),
+          'is-invalid': (PickUpDate.invalid && PickUpDate.dirty && PickUpDate.touched)
+           }">
+        <div class="row invalid-feedback" style="text-align: center" *ngIf="carReturnForm.hasError('notValid','PickUpDate')">
+          {{ PickUpDate.errors.notValid }}
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <button [hidden]="disable" type="button" class="btn btn-secondary" (click)="getRentalDetails()">Click to get rental details</button>
+        <label *ngIf="rental && carType">Rental Id</label>
+        <input *ngIf="rental && carType" type="text" class="form-control" placeholder="{{rental.Id}}" disabled>
+      </div>
+
+    </div>
+
+    <section *ngIf="rental && carType">
+      <div class="form-row">
+        <div class="form-group col-md">
+          <label>Manufacturer</label>
+          <input type="text" class="form-control" placeholder="{{carType.Manufacturer}}" disabled>
+        </div>
+        <div class="form-group col-md">
+          <label>Model</label>
+          <input type="text" class="form-control" placeholder="{{carType.Model}}" disabled>
+        </div>
+        <div class="form-group col-md">
+          <label>ProductionYear</label>
+          <input type="text" class="form-control" placeholder="{{carType.ProductionYear}}" disabled>
+        </div>
+      </div>
+      <br>
+
+      <div class="form-row">
+        <div class="form-group col-md">
+          <label>Original return Date</label>
+          <input type="text" class="form-control" placeholder="{{rental.ReturnDate | date: 'dd/MM/yyyy'}}" disabled>
+        </div>
+
+        <div class="form-group col-md">
+          <label>Actual Return Date</label>
+          <input type="text" class="form-control" placeholder="{{actualReturnDate | date: 'dd/MM/yyyy'}}" disabled>
+        </div>
+
+        <div class="form-group col-md">
+          <label>Total days</label>
+          <input type="text" class="form-control" placeholder="{{calculateTotalDays()}}" disabled>
+        </div>
+
+        <div class="form-group col-md">
+          <label>Delay days</label>
+          <input type="text" class="form-control" placeholder="{{calculateDelayDays()}}" disabled>
+        </div>
+      </div>
+      <br>
+
+      <div class="form-row">
+        <div class="form-group col-md">
+          <label>Price per day</label>
+          <input type="text" class="form-control" placeholder="{{carType.DailyPrice}}&#36; ({{carType.DelayedPrice}} &#36; - per delay day)"
+            disabled>
+        </div>
+        <div class="form-group col-md">
+          <label>Total price</label>
+          <input type="text" class="form-control" placeholder="{{totalPrice()}}" disabled>
+        </div>
+        <div class="form-group col-md">
+          <label>Bronch Id</label>
+          <input type="text" class="form-control" placeholder="{{branchService.branchId}}" disabled>
+        </div>
+        <div class="form-group col-md">
+          <label>Customer Id number</label>
+          <input type="text" class="form-control" placeholder="{{rental.UserId}}" disabled>
+        </div>
+      </div>
+
+      <br>
+      <hr>
+      <div class="form-row">
+
+        <div class="form-group col-md">
+          <label>Current Mileage</label>
+          <input type="number" class="form-control" placeholder="Current Mileage" formControlName="mileage" [ngClass]="{
+                  'is-valid': (mileage.valid && mileage.dirty && mileage.touched),
+                  'is-invalid': (mileage.invalid && mileage.dirty && mileage.touched)
+                   }">
+          <div class="row invalid-feedback" style="text-align: center" *ngIf="carReturnForm.hasError('notValid','mileage')">
+            {{ mileage.errors.notValid }}
+          </div>
+        </div>
+
+        <div class="form-group col-md">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="isFix" id="isFix" value="true" formControlName="isFix">
+            <label class="form-check-label" for="isFix">The car is Fix</label>
+          </div>
+          <div class="form-check form-check">
+            <input class="form-check-input" type="radio" name="isFix" id="isFix" value="false" formControlName="isFix">
+            <label class="form-check-label" for="isFix">The car is Not Fix</label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group col-md">
+        <div class="row justify-content-around divBTN">
+          <button type="submit" class="btn btn-primary" [disabled]="!carReturnForm.valid">Submit</button>
+        </div>
+      </div>
+
+    </section>
+  </form>
+</main>

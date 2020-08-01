@@ -1,0 +1,28 @@
+.table {
+    border-radius: 5px;
+    width: 50%;
+    margin: 0px auto;
+    float: none;
+    width: 100%;
+    text-align: center;
+}
+
+.table th {
+    text-align: center;
+}
+
+
+form{
+    margin-top: 20px;
+    background:#b7b4c163 none repeat scroll 0 0;
+    border: 5px solid #e1e8ed;
+    border-radius: 6px;
+    max-height: 100%;
+    max-width: 100%;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bold;
+    font-size: large;
+}
+

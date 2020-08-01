@@ -1,0 +1,20 @@
+<br>
+<br>
+
+<section [hidden]="rentalDates && branch">
+  <app-choose-date (choosenDates)="choosenDates($event)"></app-choose-date>
+  <br>
+  <app-choose-branch [hidden]="!rentalDates" (choosenBranch)="choosenBranch($event)"></app-choose-branch>
+</section>
+
+<section *ngIf="rentalDates && branch">
+  <div class="row">
+    <h1 class="col-md">
+      <span class="badge badge-secondary">Choose your car type!</span>
+    </h1>
+    <div  class="form-inline my-2 my-lg-0">
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="button" (click)="goBack()">Go Back</button>
+    </div>
+  </div>
+  <app-car-type-list [rentalDates]="rentalDates" [choosenBranch]="branch" (typeToRent)="typeToRent($event)"></app-car-type-list>
+</section>

@@ -1,0 +1,223 @@
+<br>
+<br>
+
+<div *ngIf="!carTypes" class="app-loading">
+  <div class="logo"></div>
+</div>
+
+<section *ngIf="carTypes">
+  <div id="header">
+    <h2 *ngIf="carTypes.length == 0">There are no cars.</h2>
+  </div>
+
+  <div *ngIf="carTypeFormVisible">
+    <form [formGroup]="CarTypeForm" novalidate>
+      <h2 *ngIf="selectedCarType">Update Car Type</h2>
+      <h2 *ngIf="!selectedCarType">Add New Car Type</h2>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="manufacturer">Manufacturer</label>
+          <input autofocus type="text" class="form-control" placeholder="Manufacturer" formControlName="manufacturer" [ngClass]="{
+                  'is-valid': (manufacturer.valid && manufacturer.dirty && manufacturer.touched),
+                  'is-invalid': (manufacturer.invalid && manufacturer.dirty && manufacturer.touched)
+                   }">
+          <div class="row invalid-feedback" style="text-align: center">
+            invalid manufacturer name (2-20 letters)
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="model">Model</label>
+          <input autofocus type="text" class="form-control" placeholder="Model" formControlName="model" [ngClass]="{
+                    'is-valid': (model.valid && model.dirty && model.touched),
+                    'is-invalid': (model.invalid && model.dirty && model.touched)
+                     }">
+          <div class="row invalid-feedback" style="text-align: center">
+            invalid model name (2-20 letters / numbers)
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="productionYear">Production Year</label>
+          <input type="number" class="form-control" placeholder="Production Year" formControlName="productionYear" [ngClass]="{
+              'is-valid': (productionYear.valid && productionYear.dirty && productionYear.touched),
+              'is-invalid': (productionYear.invalid && productionYear.dirty && productionYear.touched)
+               }">
+          <div class="row invalid-feedback" style="text-align: center">
+            invalid Production Year (Between {{minProductionYear}}-{{maxProductionYear}})
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="transmission">Transmission</label>
+          <select class="form-control" formControlName="transmission" [ngClass]="{
+                'is-valid': (transmission.valid && transmission.dirty && transmission.touched),
+                'is-invalid': (transmission.invalid && transmission.dirty && transmission.touched)
+                 }">
+            <option></option>
+            <option value="Automatic">Automatic</option>
+            <option value="Manual">Manual</option>
+          </select>
+          <div class="row invalid-feedback" style="text-align: center">
+            invalid Transmission(choose Automatic or Manual)
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="dailyPrice">Daily Price (&#36;)</label>
+          <input type="number" class="form-control" placeholder="Daily Price ($)" formControlName="dailyPrice" [ngClass]="{
+                  'is-valid': (dailyPrice.valid && dailyPrice.dirty && dailyPrice.touched),
+                  'is-invalid': (dailyPrice.invalid && dailyPrice.dirty && dailyPrice.touched)
+                   }">
+          <div class="row invalid-feedback" style="text-align: center">
+            invalid Daily Price (More then 0)
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="delayedPrice">Delayed Price (&#36;)</label>
+          <input type="number" class="form-control" placeholder="Delayed Price ($)" formControlName="delayedPrice" [ngClass]="{
+                    'is-valid': (delayedPrice.valid && delayedPrice.dirty && delayedPrice.touched),
+                    'is-invalid': (delayedPrice.invalid && delayedPrice.dirty && delayedPrice.touched)
+                     }">
+          <div class="row invalid-feedback" style="text-align: center">
+            invalid Delayed Price (More then Daily Price)
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="image">picture</label>
+          <input type="text" class="form-control" placeholder="Image Url" formControlName="image">
+        </div>
+        <div class="form-group col-md-3">
+          <img id="carTypeImage" *ngIf="image.value" src="{{image.value}}" alt="Wrong url image">
+          <img id="carTypeImage" *ngIf="!image.value" src="https://www.europcar.com/carvisuals/270x180/38296.png" alt="car type image">
+        </div>
+      </div>
+
+      <div class="row justify-content-around divBTN">
+        <button type="reset" class="btn btn-primary">Reset</button>
+        <button *ngIf="selectedCarType" type="submit" class="btn btn-primary" (click)="updateCarType()">Submit</button>
+        <button *ngIf="!selectedCarType" type="submit" class="btn btn-primary" (click)="addCarType()">Submit</button>
+      </div>
+
+    </form>
+  </div>
+
+  <div *ngIf="carFormVisible">
+    <form [formGroup]="CarForm" novalidate>
+      <h2>Add New {{selectedCarType.Manufacturer}}, {{selectedCarType.Model}}</h2>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="carId">Car ID</label>
+          <input type="number" class="form-control" placeholder="Car ID" formControlName="carId" [ngClass]="{
+              'is-valid': (carId.valid && carId.dirty && carId.touched),
+              'is-invalid': (carId.invalid && carId.dirty && carId.touched)
+               }">
+          <div class="row invalid-feedback" style="text-align: center">
+            invalid Car ID (Between 7-9 digits)
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="mileage">Mileage</label>
+          <input type="number" class="form-control" placeholder="Mileage" formControlName="mileage" [ngClass]="{
+              'is-valid': (mileage.valid && mileage.dirty && mileage.touched),
+              'is-invalid': (mileage.invalid && mileage.dirty && mileage.touched)
+               }">
+          <div class="row invalid-feedback" style="text-align: center">
+            invalid Mileage (more then 1 km)
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="transmission">Status</label>
+          <select class="form-control" formControlName="status" [ngClass]="{
+                'is-valid': (status.valid && status.dirty && status.touched),
+                'is-invalid': (status.invalid && status.dirty && status.touched)
+                 }">
+            <option></option>
+            <option value="true">Fix</option>
+            <option value="false">Not Fix</option>
+          </select>
+          <div class="row invalid-feedback" style="text-align: center">
+            invalid Status(choose Fix or Not Fix)
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="branchId">Branch</label>
+          <select class="custom-select mr-sm-2" formControlName="branchId" [ngClass]="{
+            'is-valid': (branchId.valid && branchId.dirty && branchId.touched),
+            'is-invalid': (branchId.invalid && branchId.dirty && branchId.touched)
+             }">
+            <option></option>
+            <option *ngFor="let branch of branches" value="{{branch.BranchId}}">{{branch.Name}}</option>
+          </select>
+          <div class="row invalid-feedback" style="text-align: center">
+            invalid Branch (choose from the list)
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-around divBTN">
+        <button type="reset" class="btn btn-primary">Reset</button>
+        <button type="submit" class="btn btn-primary" (click)="addCar()">Submit</button>
+      </div>
+
+    </form>
+  </div>
+
+  <br>
+  
+  <h5 (click)="toggleCarTypeForm()" style="cursor: pointer;">
+    <span>
+      <img width="24" height="24" src="http://www.iconarchive.com/download/i80209/custom-icon-design/flatastic-1/add-1.ico" alt="">
+    </span>
+    Add new type
+  </h5>
+
+  <table class="table table-hover table-dark" align="center">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Type</th>
+        <th scope="col">Transmission</th>
+        <th scope="col">Production</th>
+        <th scope="col">Daily Price</th>
+        <th scope="col">Delayed Price</th>
+        <th scope="col">Image</th>
+        <th scope="col">Edit Type</th>
+        <th scope="col">Add Car</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let carType of carTypes; index as i">
+        <th scope="row">{{i+1}}</th>
+        <td>{{carType.Manufacturer}}, {{carType.Model}} </td>
+        <td>{{carType.Transmission}}</td>
+        <td>{{carType.ProductionYear}}</td>
+        <td>{{carType.DailyPrice}}&#36;</td>
+        <td>{{carType.DelayedPrice}}&#36;</td>
+        <td align="center">
+          <img src="{{carType.Image}}" alt="Car Type image" style="width: 50px;height: 50px;">
+        </td>
+        <td>
+          <input type="image" src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/sync-circle-blue-512.png"
+            alt="Update CarTyoe" width="24" height="24" (click)="toggleCarTypeForm(carType)">
+        </td>
+        <td>
+          <input type="image" src="https://cdn2.iconfinder.com/data/icons/symbol-duo-transport-1/32/car_2-add-512.png" alt="Add Car"
+            width="24" height="24" (click)="toggleAddCarForm(carType)">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+
+</section>

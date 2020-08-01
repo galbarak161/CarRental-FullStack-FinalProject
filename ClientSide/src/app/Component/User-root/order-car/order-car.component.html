@@ -1,0 +1,75 @@
+<br>
+
+<main>
+    <h1>
+        <span class="badge badge-secondary">Current Rental</span>
+    </h1>
+    
+    <br>
+    <br>
+
+    <div *ngIf="!this.rentalService.tempRental">
+        <br>
+        <h3>
+            There is no Current rental. Click
+            <span id="linkSpan" class="alert-link" (click)="navigateToRentCar()">here</span>
+            to choose your car!
+        </h3>
+    </div>
+
+    <div class="row" *ngIf="this.rentalService.tempRental">
+        <section class="col-4">
+            <div class="card text-white bg-secondary" style="width: 25rem;">
+                <img class="card-img-top" src="{{carType.Image}}" alt="Car image">
+                <div class="card-body">
+                    <h3 class="card-title ">{{carType.Manufacturer}}, {{carType.Model}}</h3>
+                    <h5 class="card-subtitle mb-2 ">{{carType.Transmission}}</h5>
+                    <h5 class="card-subtitle mb-2 ">Production Year: {{carType.ProductionYear}}</h5>
+                    <br>
+                    <div class="row">
+                        <h6 class="card-subtitle mb-2 col-md">Daily Price: {{carType.DailyPrice}} &#36;</h6>
+                        <h6 class="card-subtitle mb-2 col-md">Delayed Price: {{carType.DelayedPrice}} &#36;</h6>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="col-8" style="text-align: left;">
+            <br>
+            <div class="row form-inline my-2 my-lg-0">
+                <p class="col-md-11">Branch: {{branch.Name}}, {{branch.Address}}</p>
+                <img class="col-md-1" id="mapBtn" (click)="toggleMap()" src="https://png.icons8.com/color/1600/google-maps.png" alt="Map Button">
+            </div>
+            <div [hidden]="!showMap" class="row form-inline my-2 my-lg-0">
+                <br>
+                <div #gmap id="map"></div>
+                <br>
+            </div>
+
+            <div class="row form-inline my-2 my-lg-0">
+                <p class="col-md-11">Pick Up Date: {{ dates.PickUpDate | date: 'EEEE, dd/MM/yyyy'}}</p>
+            </div>
+            <div class="row form-inline my-2 my-lg-0">
+                <p class="col-md-11">Return Date: {{dates.ReturnDate | date: 'EEEE, dd/MM/yyyy'}}</p>
+            </div>
+            <div class="row form-inline my-2 my-lg-0">
+                <p class="col-md-11">Total dayes: {{ dates.TotalDays }}</p>
+            </div>
+            <div class="row form-inline my-2 my-lg-0">
+                <p class="col-md-11">Total price: {{ dates.TotalDays * carType.DailyPrice }} &#36;</p>
+            </div>
+
+            <br>
+
+            <div class="row justify-content-around divBTN">
+                <button type="button" (click)="cancelRental()" class="col-5 btn btn btn-danger">Cancel this order</button>
+                <button type="button" (click)="rentCar()" class="col-5 btn btn btn-success">Rent this car now!</button>
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+<br>
+<br>

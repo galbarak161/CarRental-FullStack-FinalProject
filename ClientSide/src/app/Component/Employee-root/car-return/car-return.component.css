@@ -1,0 +1,30 @@
+main{
+    margin-top: 20px;
+    background:#b7b4c163 none repeat scroll 0 0;
+    border: 5px solid #e1e8ed;
+    border-radius: 6px;
+    max-height: 100%;
+    max-width: 100%;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bold;
+    font-size: large;
+}
+
+#carImage{
+    width: 75px;
+    height: 75px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+input{
+    text-align: center;
+}
+
+hr{
+    color: #f00;
+    background-color: #f00;
+    height: 5px;
+}

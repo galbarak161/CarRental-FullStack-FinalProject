@@ -1,0 +1,17 @@
+#userImage{
+    width: 100px;
+    height: 100px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.divBTN{
+    align-content: center;
+    padding-bottom: 10px;
+}
+
+#serverErrorFeedback{
+    text-align: center;
+    font-size: medium;
+    color: red;
+}

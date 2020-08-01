@@ -1,0 +1,10 @@
+.divBTN{
+    align-content: center;
+    padding-bottom: 10px;
+}
+
+#serverErrorFeedback{
+    text-align: center;
+    font-size: medium;
+    color: red;
+}

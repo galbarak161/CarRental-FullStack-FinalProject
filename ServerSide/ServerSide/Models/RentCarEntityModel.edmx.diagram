@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ac0089c49eaa43f9bedc7c118c268b80" Name="Diagram1" ZoomLevel="115">
+        <EntityTypeShape EntityType="RentCarDBModel.Messages" Width="1.5" PointX="9.75" PointY="2.5" />
+        <EntityTypeShape EntityType="RentCarDBModel.Branch" Width="1.5" PointX="6.125" PointY="3.5" />
+        <EntityTypeShape EntityType="RentCarDBModel.Employee" Width="1.5" PointX="5.375" PointY="0.5" />
+        <EntityTypeShape EntityType="RentCarDBModel.Rental" Width="1.5" PointX="1.375" PointY="3.625" />
+        <AssociationConnector Association="RentCarDBModel.FK_EmployeeBranchId" />
+        <EntityTypeShape EntityType="RentCarDBModel.Car" Width="1.5" PointX="3.375" PointY="0.5" />
+        <AssociationConnector Association="RentCarDBModel.FK_CarBranchId" />
+        <AssociationConnector Association="RentCarDBModel.FK_RentalCarId" />
+        <EntityTypeShape EntityType="RentCarDBModel.User" Width="1.5" PointX="7.75" PointY="0.75" />
+        <AssociationConnector Association="RentCarDBModel.FK_EmployeeUserId" />
+        <AssociationConnector Association="RentCarDBModel.FK_RentalUserId" />
+        <EntityTypeShape EntityType="RentCarDBModel.CarType" Width="1.5" PointX="0.75" PointY="0.5" />
+        <AssociationConnector Association="RentCarDBModel.FK_CarTypeId" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
